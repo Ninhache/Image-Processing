@@ -6,7 +6,7 @@ from sympy import im
 from mask import robert3d, prewitt, sobel, laplacien1, laplacien2
 
 
-tmpImage = cv.imread("canvas.png",0)
+tmpImage = cv.imread("../images/canvas.png",0)
 
 
 def convolution2D(image, filtre):
@@ -39,8 +39,6 @@ def imgContourLAPLAC(image, filtre, seuil):
 
     t = 3 // 2
 
-    
-    
     for heigth in range(t, (laplace.shape[1] - t )):
         for width in range(t, (laplace.shape[0] - t )):
             # 

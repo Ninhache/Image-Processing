@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import math as math
 
 
-cellules=cv.imread("canvas.png",0)
+cellules=cv.imread("../images/canvas.png",0)
 
 def convolution2D(image, filtre):
     shape = np.shape(image) # (256, 256)

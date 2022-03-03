@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 '''
 
-cellules = cv.imread('cellules.png',0)
+cellules = cv.imread('../images/cellules.png',0)
 
 print(cellules.shape) # < dimension of the image
 
@@ -49,7 +49,7 @@ def histogramCumulFromImage(image):
 ###############################
 ###############################
 
-cellules=cv.imread("cellules.png",0)
+cellules=cv.imread("../images/cellules.png",0)
 #print(cellules.shape)
 
 histCellules=histogramFromImage(cellules)
@@ -76,7 +76,7 @@ plt.title('histogramme de Cellules')
 ###############################
 ###############################
 
-irm = cv.imread("irmCerveau.png",0)
+irm = cv.imread("../images/irmCerveau.png",0)
 histIRM=histogramCumulFromImage(irm)
 #histCumIRM=histogrammeCumule(histIRM)
 
