@@ -6,7 +6,7 @@ from sympy import im
 from mask import robert3d, prewitt, sobel, laplacien1, laplacien2
 
 
-tmpImage = cv.imread("canvas.png")
+tmpImage = cv.imread("canvas.png",0)
 
 
 def convolution2D(image, filtre):
@@ -16,8 +16,8 @@ def convolution2D(image, filtre):
     c = (filtre.shape[0]-1) // 2 
     l = (filtre.shape[1]-1) // 2 
 
-    for j in range(l, (image.shape[1] - l)): # 1:255
-        for i in range(c, (image.shape[0] - c)): # 0:255
+    for i in range(l, (image.shape[1] - l)): # 1:255
+        for j in range(c, (image.shape[0] - c)): # 0:255
             imageConvolue[i,j] = np.sum(image[i - c : i + c + 1, j - l : j + l + 1] * filtre)
 
     return imageConvolue
@@ -31,27 +31,31 @@ def imgContourGRAD(image, filtre, seuil = 100):
 
     return contour
 
-def imgContourLAPLAC(image, filtre, seuil = 100):
+def imgContourLAPLAC(image, filtre, seuil):
     laplace = convolution2D(image, filtre)
 
     shape = np.shape(image) # (256, 256)
     imageRes = np.zeros(shape) # (256, 256) filled with 0 
 
     t = 3 // 2
+
     
-    for j in range(t, (image.shape[1] - t)):
-        for i in range(t, (image.shape[0] - t)):
-            matrix = image[i - t : i + t + 1, j - t : j + t + 1]
-            minValue = np.amin(matrix)
-            maxValue = np.amax(matrix)
+    
+    for heigth in range(t, (laplace.shape[1] - t )):
+        for width in range(t, (laplace.shape[0] - t )):
+            # 
+            matrix = laplace[width - t : width + t + 1, heigth - t : heigth + t + 1]
+        
+            minValue = np.min(matrix)
+            maxValue = np.max(matrix)
             moyValue = maxValue - minValue
             
             if(maxValue > 0 and minValue < 0 and moyValue > seuil):
-                imageRes[i, j] = 1
+                imageRes[width, heigth] = 1
             else:
-                imageRes[i, j] = 0
+                imageRes[width, heigth] = 0
 
-    return imageRes
+    return imageRes,laplace
 
 def openImageInWindow(image1):
     plt.figure("title")
@@ -62,25 +66,22 @@ def openImageInWindow(image1):
     plt.show()
 
 
-def openImagesInWindow(image1, image2, image3):
+def openImagesInWindow(image1, image2):
     plt.figure("title")
     
-    plt.subplot(1,3,1)
-    plt.imshow(image1)
+    plt.subplot(1,2,1)
+    plt.imshow(image1,'gray')
     
 
-    plt.subplot(1,3,2)
-    plt.imshow(image2)
+    plt.subplot(1,2,2)
+    plt.imshow(image2,'gray')
     
-
-    plt.subplot(1,3,3)
-    plt.imshow(image3)
     
 
     plt.show()
 
 
-tmpSeuil = 50
+
 '''
 imgRobert   = imgContourGRAD(tmpImage, robert3d, tmpSeuil)
 imgPrewitt  = imgContourGRAD(tmpImage, prewitt, tmpSeuil)
@@ -88,5 +89,11 @@ imgSobel    = imgContourGRAD(tmpImage, sobel, tmpSeuil)
 
 openImagesInWindow(imgRobert, imgPrewitt, imgSobel)
 '''
-imgLaplace1 = imgContourLAPLAC(tmpImage, laplacien1)
-openImageInWindow(imgLaplace1)
+#imgLaplace1 = cv.Laplacian(tmpImage, cv.CV_32F)
+
+tmpSeuil = 100
+imgLaplace1,l1 = imgContourLAPLAC(tmpImage, laplacien1, tmpSeuil)
+imgLaplace2,l2 = imgContourLAPLAC(tmpImage, laplacien2, tmpSeuil)
+print(np.min(imgLaplace2))
+
+openImagesInWindow(imgLaplace1, imgLaplace2)
