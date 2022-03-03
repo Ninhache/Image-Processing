@@ -3,8 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math as math
 
-from sympy import im
-
 
 cellules=cv.imread("canvas.png",0)
 
@@ -28,8 +26,6 @@ def convolution2D(image, filtre):
 
     c = (filtre.shape[1]-1) // 2 
     l = (filtre.shape[0]-1) // 2 
-
-    
 
     for imgJ in range((image.shape[1])): # COLONNE IMAGE
         for imgI in range((image.shape[0])): # LIGNE IMAGE
@@ -86,4 +82,4 @@ def openImagesInWindow(image1, image2):
 
 #openImagesInWindow(cellules, convolution2D(cellules, np.ones(shape=(21, 5))))
 
-openImagesInWindow(cellules, cv.blur(cellules, (21,21), borderType=cv.BORDER_CONSTANT))
+openImagesInWindow(cellules, cv.blur(cellules, (7,7), borderType=cv.BORDER_CONSTANT))
