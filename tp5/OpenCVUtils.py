@@ -1,7 +1,6 @@
 import cv2 as cv
 import matplotlib.pyplot as plt
 
-
 def showImages(*images):
     plt.figure("Images...")
     
@@ -13,7 +12,7 @@ def showImages(*images):
 
     for row in range(nb_row +1):
         for col in range(nb_col):
-
+                    
             plt.subplot(nb_row+1,nb_col,index)
             plt.imshow(images[index -1])
             plt.axis("off")
@@ -25,8 +24,3 @@ def showImages(*images):
                 break
 
     plt.show()
-    
-
-
-
-showImages(tmpImage,tmpImage2)
