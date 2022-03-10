@@ -14,7 +14,7 @@ def showImages(*images):
         for col in range(nb_col):
                     
             plt.subplot(nb_row+1,nb_col,index)
-            plt.imshow(images[index -1], 'gray')
+            plt.imshow(images[index -1])
             plt.axis("off")
             index = index + 1
 

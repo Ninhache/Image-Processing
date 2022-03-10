@@ -1,7 +1,6 @@
 import cv2 as cv
 import numpy as np
 import matplotlib.pyplot as plt
-from sympy import im
 
 from mask import robert3d, prewitt, sobel, laplacien1, laplacien2
 
@@ -22,7 +21,7 @@ def convolution2D(image, filtre):
 
     return imageConvolue
 
-def imgContourGRAD(image, filtre, seuil = 100):
+def imgContourGRAD(image, filtre, seuil):
     gx = convolution2D(image, filtre)
     gy = convolution2D(image, np.rot90(filtre))
     module = np.sqrt(gx * gx + gy * gy)
@@ -64,34 +63,35 @@ def openImageInWindow(image1):
     plt.show()
 
 
-def openImagesInWindow(image1, image2):
+def openImagesInWindow(image1, image2, image3):
     plt.figure("title")
     
-    plt.subplot(1,2,1)
+    plt.subplot(1,3,1)
     plt.imshow(image1,'gray')
     
 
-    plt.subplot(1,2,2)
+    plt.subplot(1,3,2)
     plt.imshow(image2,'gray')
     
-    
+    plt.subplot(1,3,3)
+    plt.imshow(image3,'gray')
 
     plt.show()
 
 
+tmpSeuil = 50
 
-'''
 imgRobert   = imgContourGRAD(tmpImage, robert3d, tmpSeuil)
 imgPrewitt  = imgContourGRAD(tmpImage, prewitt, tmpSeuil)
 imgSobel    = imgContourGRAD(tmpImage, sobel, tmpSeuil)
 
 openImagesInWindow(imgRobert, imgPrewitt, imgSobel)
-'''
+
 #imgLaplace1 = cv.Laplacian(tmpImage, cv.CV_32F)
-
-tmpSeuil = 100
-imgLaplace1,l1 = imgContourLAPLAC(tmpImage, laplacien1, tmpSeuil)
-imgLaplace2,l2 = imgContourLAPLAC(tmpImage, laplacien2, tmpSeuil)
-print(np.min(imgLaplace2))
-
+#
+#tmpSeuil = 10
+#imgLaplace1,l1 = imgContourLAPLAC(tmpImage, laplacien1, tmpSeuil)
+#imgLaplace2,l2 = imgContourLAPLAC(tmpImage, laplacien2, tmpSeuil)
+#print(np.min(imgLaplace2))
+#
 openImagesInWindow(imgLaplace1, imgLaplace2)

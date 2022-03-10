@@ -82,4 +82,4 @@ def openImagesInWindow(image1, image2):
 
 #openImagesInWindow(cellules, convolution2D(cellules, np.ones(shape=(21, 5))))
 
-openImagesInWindow(cellules, cv.blur(cellules, (7,7), borderType=cv.BORDER_CONSTANT))
+openImagesInWindow(cellules, cv.blur(cellules, (3,3), borderType=cv.BORDER_CONSTANT))
